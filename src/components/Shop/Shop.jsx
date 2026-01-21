@@ -7,9 +7,10 @@ import { Link, useLoaderData } from 'react-router-dom';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+     const [currentPage, setCurrentPage] = useState(0);
     const [cart, setCart] = useState([])
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const {count} = useLoaderData();
-    const itemsPerPage = 10;
     const numberOfPages = Math.ceil(count / itemsPerPage);
 
     const pages = [];
@@ -72,6 +73,8 @@ const Shop = () => {
 
     const handleItemsPerPage = e => {
         console.log(e.target.value);
+        const val = parseInt(e.target.value);
+        setItemsPerPage(val);
     }
 
     return (
@@ -97,7 +100,10 @@ const Shop = () => {
             </div>
             <div className='pagination'>
                 {
-                    pages.map(page => <button key={page}>{page}</button>)
+                    pages.map(page => 
+                    <button 
+                    onClick={()=> setCurrentPage(page)}
+                     key={page}>{page}</button>)
                 }
                 <select value={itemsPerPage} onChange={handleItemsPerPage} name='' id=''>
                 <option value="5">5</option>
